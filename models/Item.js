@@ -5,9 +5,11 @@ const Schema = mongoose.Schema
 const itemSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        dropDups: true
     },
-    photouUrl: {
+    photoUrl: {
         type: String,
         required: true
     },
@@ -15,10 +17,10 @@ const itemSchema = new Schema({
         type: Number,
         required: true
     },
-    totalAmount: {
-        type: Number,
-        required: true
-    },
+    category: {
+        type:String,
+        default: "vegetables"
+    }
 }, {timestamps: true})
 
 

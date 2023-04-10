@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const orderService = require('./services/orderService')
 const paymentService = require('./services/paymentService')
+const itemService = require('./services/itemService')
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -27,13 +28,32 @@ app.get('/api/register', (req, res) => {
   res.status(200).json("received")
 });
 
+//add item to database
+app.post('/api/v1/add-item', async (req, res) => {
+  try{
+    const response = await itemService.addItem(req.body)
+    res.status(201).json(response)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+})
+
+//get all items from database
+app.get('/api/v1/items', async (req, res) => {
+  try {
+    const response = await itemService.getAllItems()
+    res.status(200).json(response)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+})
+
 // Order saving endpoint
 app.post('/api/v1/orders', async (req, res) => {
   try {
     const orderResponse = await orderService.createOrder(req.body)
-    res.status(200).send(orderResponse)
+    res.status(201).send(orderResponse)
   } catch (error) {
-    console.log(error)
     res.status(400).json({error: error.message})
   }
 });
