@@ -4,34 +4,26 @@ const Schema = mongoose.Schema
 
 const orderSchema = new Schema({
     items: [{
+        _id: {
+            type:String,
+            required: true
+        },
         name: {
             type: String, 
             required:true
         },
-        amount: {
+        purchaseAmount: {
             type: Number,
             required: true
         }
     }],
     email: {
-        type: String,
-        required: true
-    },
-    phone: {
-        type: String,
-        required: true
-    },
-    totalAmount: {
-        type: Number,
-        required: true
-    },
-    provider: {
-        type: String,
-        required: true
-    },
-    paymentRef: {
         type:String
     },
+    phone: {
+        type: String
+    },
+    totalAmount:Number,
     paymentStatus: {
         type: String,
         default: "pending"
@@ -41,6 +33,11 @@ const orderSchema = new Schema({
         default: "pending"
     }
 }, {timestamps: true})
+
+orderSchema.pre('save', function(next) {
+    this.totalAmount = this.items.reduce((total, item) => total + item.purchaseAmount, 0);
+    next();
+});
 
 
 module.exports = mongoose.model('Order', orderSchema)
