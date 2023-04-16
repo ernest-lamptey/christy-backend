@@ -58,6 +58,16 @@ app.post('/api/v1/orders', async (req, res) => {
   }
 });
 
+app.post('/api/v1/pay', async (req, res) => {
+  console.log("hit route")
+  try {
+    const paymentResponse = await paymentService.makePayment(req.body)
+    res.status(201).send(paymentResponse)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+})
+
 app.post('api/v1/confirmOTP', async (req, res) => {
   try {
     const response = paymentService.confirmOTP(req.body)

@@ -25,6 +25,7 @@ const makePayment = async (body) => {
     }
 }
 
+//this feature is only for airtel and vodafone
 const confirmOTP = async (body) => {
     const { otp, reference } = body
     try {
