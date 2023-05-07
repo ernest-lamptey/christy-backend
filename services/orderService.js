@@ -11,11 +11,22 @@ const createOrder = async (body) => {
     }
 }
 
+const getAllOrders = async () => {
+    try {
+        const items = await Order.find({})
+        return items
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
 const confirmOrderPayment = async (body) => {
 
 }
 
 module.exports = {
     createOrder,
+    getAllOrders,
     confirmOrderPayment
 }

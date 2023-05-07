@@ -38,6 +38,16 @@ app.post('/api/v1/add-item', async (req, res) => {
   }
 })
 
+//get all orders from database
+app.get('/api/v1/orders', async (req, res) => {
+  try {
+    const response = await orderService.getAllOrders()
+    res.status(200).json(response)
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+})
+
 //get all items from database
 app.get('/api/v1/items', async (req, res) => {
   try {
