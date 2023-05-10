@@ -1,10 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-require('dotenv').config();
-const orderService = require('./services/orderService')
+const express = require('express')
+const cors = require('cors')
+const mongoose = require('mongoose')
+require('dotenv').config()
 const paymentService = require('./services/paymentService')
 const itemService = require('./services/itemService')
+const adminRouter = require('./routers/adminRouter')
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,7 +23,9 @@ connection.once('open', () => {
   });
 });
 
-// User registration endpoint
+// User registration endpoint - Only for testing...
+app.use('/api/v1/admin', adminRouter)
+
 app.get('/api/register', (req, res) => {
   res.status(200).json("received")
 });
@@ -33,16 +35,6 @@ app.post('/api/v1/add-item', async (req, res) => {
   try{
     const response = await itemService.addItem(req.body)
     res.status(201).json(response)
-  } catch (error) {
-    res.status(400).json({error: error.message})
-  }
-})
-
-//get all orders from database
-app.get('/api/v1/orders', async (req, res) => {
-  try {
-    const response = await orderService.getAllOrders()
-    res.status(200).json(response)
   } catch (error) {
     res.status(400).json({error: error.message})
   }
