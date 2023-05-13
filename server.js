@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 const paymentService = require('./services/paymentService')
 const itemService = require('./services/itemService')
+const orderService = require('./services/orderService')
 const adminRouter = require('./routers/adminRouter')
 
 const app = express();
