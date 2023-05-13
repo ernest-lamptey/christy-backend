@@ -27,10 +27,6 @@ connection.once('open', () => {
 // User registration endpoint - Only for testing...
 app.use('/api/v1/admin', adminRouter)
 
-app.get('/api/register', (req, res) => {
-  res.status(200).json("received")
-});
-
 //add item to database
 app.post('/api/v1/add-item', async (req, res) => {
   try{
