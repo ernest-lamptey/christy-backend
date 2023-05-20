@@ -1,6 +1,7 @@
 const express = require('express')
 const adminRouter = express.Router()
 const orderService = require('../services/orderService')
+const itemService = require('../services/itemService')
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -97,10 +98,28 @@ adminRouter.get('/orders', async (req, res) => {
       }
 })
 
+adminRouter.get('/items', async (req, res) => {
+    try {
+        const response = await itemService.getAllItems()
+        res.status(200).json(response)
+      } catch (error) {
+        res.status(400).json({error: error.message})
+      }
+})
+
 //update order status
 adminRouter.put('/order', async (req, res) => {
     try {
         const response = await orderService.updateOrderStatus(req.body)
+        res.status(200).json(response)
+      } catch (error) {
+        res.status(error.status || 500).json({error: error.message})
+      }
+})
+
+adminRouter.put('/item', async (req, res) => {
+    try {
+        const response = await itemService.updateItemPrice(req.body)
         res.status(200).json(response)
       } catch (error) {
         res.status(error.status || 500).json({error: error.message})

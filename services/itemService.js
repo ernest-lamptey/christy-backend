@@ -21,7 +21,23 @@ const getAllItems = async () => {
     }
 }
 
+const updateItemPrice = async (body) => {
+    const { itemId, price } = body
+    try {
+        const item = await Item.findOneAndUpdate(
+            { _id: itemId }, // filter criteria
+            { price: price }, // update
+            { new: true } // options: return the updated document
+          )
+        return item
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
 module.exports = {
     addItem,
-    getAllItems
+    getAllItems,
+    updateItemPrice
 }
